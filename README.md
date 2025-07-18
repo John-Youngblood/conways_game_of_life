@@ -30,7 +30,65 @@ This project is for answering the following prompt:
 > 
 > We're most interested in both the technical aspects of how you deal with very large integers and how you go about solving the problem. At the onsite, be prepared to discuss your solution, including the choices and tradeoffs you made. Though not required, you are welcome to bring a laptop with you to your interview to walk us through the code.
 
+---
 ## Relevant Files
 
-- `conways_game_of_life.py`: python implementation
-- ``
+- `conways_game_of_life.py`: python implementation of prompt
+- `conways_game_of_life.ipynb`: jupyter notebook used for prototyping out python implementation (also includes alternate convolution method)
+- `goImplementation/main.go`: go implementation (converted from python implementation with assistance from AI)
+
+---
+## How to Run
+### Python Implementation
+Pass input through stdin:
+```bash
+python conways_game_of_life.py << EOF
+#Life 1.06
+1 0
+2 1
+0 2
+1 2
+2 2
+EOF
+```
+or using pipe:
+```bash
+cat glider.life | python conways_game_of_life.py
+```
+or using the `-f` flag:
+```bash
+python conways_game_of_life.py -f glider.life
+```
+
+you can also pass # of generations to go through using the `-g` flag (default 10):
+```bash
+python conways_game_of_life.py -f glider.life -g 50
+```
+
+to see all available options, use the `--help` flag:
+
+```bash
+python conways_game_of_life.py --help
+```
+
+### Go Implementation
+build executable first:
+```bash
+go build
+```
+
+then pass input through stdin:
+```bash
+./goImplementation << EOF
+#Life 1.06
+1 0
+2 1
+0 2
+1 2
+2 2
+EOF
+```
+or using pipe:
+```bash
+cat glider.life | ./goImplementation
+```

@@ -72,8 +72,10 @@ def game_of_life(live_cells: set, generations: int = 10) -> set:
 
         # calculate next generation based on rules of life
         for cell, neighbor_count in neighbor_counts.items():
+            # birth rule: a dead cell with exactly 3 neighbors comes to life
             if cell not in live_cells and neighbor_count == 3:
                 next_gen_live_cells.add(cell)
+            # survival rule: a live cell with 2 or 3 neighbors survives
             elif cell in live_cells and (neighbor_count == 2 or neighbor_count == 3):
                 next_gen_live_cells.add(cell)
 
@@ -82,23 +84,44 @@ def game_of_life(live_cells: set, generations: int = 10) -> set:
     return live_cells
 
 if __name__ == "__main__":
-    glider_start_106_string = """
-#Life 1.06
-1 0
-2 1
-0 2
-1 2
-2 2
-"""
-    print("--- Glider Initial State ---")
-    print(glider_start_106_string.strip())
+    import argparse
+    import sys
 
-    glider_start_state = parse_life_106_string(glider_start_106_string)
+    # define optional arguments
+    parser = argparse.ArgumentParser(
+        description="Run Conway's Game of Life. Defaults to reading from stdin."
+    )
+    parser.add_argument(
+        '-f', '--file',
+        dest='filepath',
+        help="Path to the Life 1.06 file to use as input instead of stdin."
+    )
+    parser.add_argument(
+        '-g', '--generations',
+        type=int,
+        default=10,
+        help="Number of generations to run (default: 10)."
+    )
+    args = parser.parse_args()
 
-    glider_end_state = game_of_life(glider_start_state, 10)
+    life_106_string = ""
 
-    glider_end_106_string = generate_life_106_string(glider_end_state)
+    # check if --file argument was provided
+    if args.filepath:
+        try:
+            with open(args.filepath, 'r') as f:
+                life_106_string = f.read()
+        except FileNotFoundError:
+            print(f"Error: File not found at '{args.filepath}'", file=sys.stderr)
+            sys.exit(1)
+    else:
+        # if no filepath was given, read from standard input (stdin).
+        life_106_string = sys.stdin.read()
 
-    print("\n--- Glider State After 10 Iterations ---")
-    print(glider_end_106_string.strip())
+    # --- The rest of your logic remains the same ---
+    start_state = parse_life_106_string(life_106_string)
+    end_state = game_of_life(start_state, generations=args.generations)
+    end_106_string = generate_life_106_string(end_state)
+
+    print(end_106_string.strip())
 
