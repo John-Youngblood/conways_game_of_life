@@ -1,0 +1,46 @@
+# JetBrains IDEs (PyCharm, IntelliJ, etc.)
+# User-specific settings, run configurations, and temporary files.
+.idea/
+
+# Python bytecode and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environments
+# Common names for virtual environment folders.
+venv/
+.venv/
+env/
+.env/
+virtualenv/
+
+# Distribution / Packaging
+build/
+dist/
+*.egg-info/
+*.egg
+wheelhouse/
+sdist/
+
+# Testing & Coverage Reports
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+nosetests.xml
+coverage.xml
+
+# Type Checker Caches (Mypy, Pyre, Pytype)
+.mypy_cache/
+.pyre/
+.pytype/
+
+# Environment Variables
+# The .env file often contains secrets and should not be committed.
+.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db
