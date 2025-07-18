@@ -1,5 +1,9 @@
 from collections import defaultdict
 
+# constraints for conways game of life coords
+MIN_64BIT_INT = -2**63
+MAX_64BIT_INT = 2**63 - 1
+
 def parse_life_106_string(life_106_string: str) -> set:
     """
     :param life_106_string: string in Life 1.06 format
@@ -15,6 +19,9 @@ def parse_life_106_string(life_106_string: str) -> set:
     for line in lines[1:]:
         try:
             x, y = map(int, line.split())
+            # check if input is in range
+            if not (MIN_64BIT_INT <= x <= MAX_64BIT_INT and MIN_64BIT_INT <= y <= MAX_64BIT_INT):
+                continue
             live_cells.add((x, y))
         except (ValueError, IndexError):
             # Skip malformed lines
@@ -48,14 +55,18 @@ def game_of_life(live_cells: set, generations: int = 10) -> set:
         # using defaultdict to avoid KeyErrors
         neighbor_counts = defaultdict(int)
 
-        # increment neighbors for all live cells
+        # increment the 8 neighbors for all live cells
         for x, y in live_cells:
             for i in range(-1, 2):
                 for j in range(-1, 2):
                     # live cell is not its own neighbor
                     if i == 0 and j == 0:
                         continue
-                    neighbor_counts[(x + i, y + j)] += 1
+                    # only consider neighbors that are within the 64-bit space.
+                    nx, ny = x + i, y + j
+                    if MIN_64BIT_INT <= nx <= MAX_64BIT_INT and MIN_64BIT_INT <= ny <= MAX_64BIT_INT:
+                        neighbor_counts[(nx, ny)] += 1
+                    # neighbor_counts[(x + i, y + j)] += 1
 
         next_gen_live_cells = set()
 
