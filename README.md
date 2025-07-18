@@ -35,7 +35,8 @@ This project is for answering the following prompt:
 
 - `conways_game_of_life.py`: python implementation of prompt
 - `conways_game_of_life.ipynb`: jupyter notebook used for prototyping out python implementation (also includes alternate convolution method)
-- `goImplementation/main.go`: go implementation (converted from python implementation with assistance from AI)
+- `requirements.txt`: necessary libraries for running jupyter notebook (not needed for running `conways_game_of_life.py`)
+- `main.go`: go implementation (converted from python implementation with assistance from AI)
 
 ---
 ## How to Run
